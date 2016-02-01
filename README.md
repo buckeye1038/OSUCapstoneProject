@@ -23,13 +23,21 @@ The project is broken down into 4 sections, voice recognition, tokenizing, analy
 This takes the voice input from the user's microphone and translates it into data that can be manipulated. Will be operating continuously, and will be passing data to the tokenizer whenever the user takes a small break, i.e. a pause.
 - Requirements
   - Only works in Google Chrome browser
-- Input Parameter
+- Input
   - JavaScript array - to save data to for the tokenizer to work with
-- Return
+- Output
   - None
 
 ####Tokenizer
 
 ####Analysis
-
+Attempts to parse a date, subject, and description from the input text, puts that info in an object, and passes it to the UI controller.
+- Input
+	- chunk_transcript: {string}    // sent by the tokenizer whenever it believes that a date/time has been mentioned to schedule
+- Output
+	(object with the following fields)
+	- date: {date},
+	- subject: {string},
+	- description: {string}
+	
 ####UI
