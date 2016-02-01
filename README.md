@@ -52,3 +52,13 @@ Attempts to parse a date, subject, and description from the input text, puts tha
 	- description: {string}
 	
 ####UI
+Displays the JSON object from the Voice Analysis in a Panel with heading object using Bootstrap (http://getbootstrap.com/components/#panels-heading). Once the user makes a selection, it will be added to Google Calendar using the JS API.
+
+- Input 
+	-JSON object with date, subject, and description
+- Output
+	-set calendarId as either ‘primary’ or specific user calendar ID
+	-pass event object with attributes (only start and end times are required in the API) as a ‘resource’
+	-call events.insert()
+	-example: https://developers.google.com/google-apps/calendar/create-events
+	
