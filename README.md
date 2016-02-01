@@ -28,7 +28,18 @@ This takes the voice input from the user's microphone and translates it into dat
 - Output
   - None
 
-####Tokenizer
+####Tokenizer/Pre-Analyzer
+Sees when a meeting might have been mentioned. Takes the previous n words leading up to the mention of a meeting and the next m words after the mention of a meeting.
+- Input 
+	- array of words
+- Output
+	- JSON
+	- Format:
+{
+	"pre": [words_before_meeting_mention],
+	"mention": [words_of_meeting_mention],
+	"post": [words_after_meeting_mention]
+}
 
 ####Analysis
 Attempts to parse a date, subject, and description from the input text, puts that info in an object, and passes it to the UI controller.
