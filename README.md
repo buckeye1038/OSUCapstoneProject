@@ -30,50 +30,44 @@ This takes the voice input from the user's microphone and translates it into dat
 
 ####Tokenizer/Pre-Analyzer
 Sees when a meeting might have been mentioned. Takes the previous n words leading up to the mention of a meeting and the next m words after the mention of a meeting.
-- Input 
-	- JavaScript array of strings
-- Output
-	- JavaScript object
-	- Format:
+- Contract
 ```javascript
-{
-	"pre": "example words before meeting mention",
-	"mention": "example words of meeting mention",
-	"post": "example words after meeting mention",
-}
+// namespace
+var Tokenizer = {...};
+
+// interface
+Tokenizer.handleResults = function(results){...}; // results is array of strings
 ```
 
 ####Analysis
 Attempts to parse a date, subject, and description from the input text, puts that info in an object, and passes it to the UI controller.
-- Input
-	- JavaScript object
-	- Format:
+- Contract
 ```javascript
+// namespace
+var Analysis = {...};
+
+// interface
+Analysis.handleMention = function(unprocessedMention){...};
+
+// UnprocessesMention object
 {
 	"pre": "example words before meeting mention",
 	"mention": "example words of meeting mention",
 	"post": "example words after meeting mention",
-}
-```
-
-- Output
-	- JavaScript object
-	- Format:
-```javascript
-{
-	"date": <Date object>,
-	"subject": "example subject",
-	"description": "example description"
 }
 ```
 	
 ####UI
 Displays the JSON object from the Voice Analysis in a Panel with heading object using Bootstrap (http://getbootstrap.com/components/#panels-heading). Once the user makes a selection, it will be added to Google Calendar using the JS API.
-
-- Input
-	- JavaScript object
-	- Format:
+- Contract
 ```javascript
+// namespace
+var UIController = {...};
+
+// interface
+UIController.handleMention = function(processedMention){...};
+
+// ProcessedMention object
 {
 	"date": <Date object>,
 	"subject": "example subject",
