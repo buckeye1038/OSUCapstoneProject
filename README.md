@@ -24,38 +24,63 @@ This takes the voice input from the user's microphone and translates it into dat
 - Requirements
   - Only works in Google Chrome browser
 - Input
-  - JavaScript array - to save data to for the tokenizer to work with
+  - JavaScript array of string results (from Google Web Speech API)
 - Output
-  - None
+  - JavaScript array of strings
 
 ####Tokenizer/Pre-Analyzer
 Sees when a meeting might have been mentioned. Takes the previous n words leading up to the mention of a meeting and the next m words after the mention of a meeting.
 - Input 
-	- array of words
+	- JavaScript array of strings
 - Output
-	- JSON
+	- JavaScript object
 	- Format:
+```javascript
 {
-	"pre": [words_before_meeting_mention],
-	"mention": [words_of_meeting_mention],
-	"post": [words_after_meeting_mention]
+	"pre": "example words before meeting mention",
+	"mention": "example words of meeting mention",
+	"post": "example words after meeting mention",
 }
+```
 
 ####Analysis
 Attempts to parse a date, subject, and description from the input text, puts that info in an object, and passes it to the UI controller.
 - Input
-	- chunk_transcript: {string}    // sent by the tokenizer whenever it believes that a date/time has been mentioned to schedule
+	- JavaScript object
+	- Format:
+```javascript
+{
+	"pre": "example words before meeting mention",
+	"mention": "example words of meeting mention",
+	"post": "example words after meeting mention",
+}
+```
+
 - Output
-	(object with the following fields)
-	- date: {date},
-	- subject: {string},
-	- description: {string}
+	- JavaScript object
+	- Format:
+```javascript
+{
+	"date": <Date object>,
+	"subject": "example subject",
+	"description": "example description"
+}
+```
 	
 ####UI
 Displays the JSON object from the Voice Analysis in a Panel with heading object using Bootstrap (http://getbootstrap.com/components/#panels-heading). Once the user makes a selection, it will be added to Google Calendar using the JS API.
 
-- Input 
-	-JSON object with date, subject, and description
+- Input
+	- JavaScript object
+	- Format:
+```javascript
+{
+	"date": <Date object>,
+	"subject": "example subject",
+	"description": "example description"
+}
+```
+
 - Output
 	-set calendarId as either ‘primary’ or specific user calendar ID
 	-pass event object with attributes (only start and end times are required in the API) as a ‘resource’
