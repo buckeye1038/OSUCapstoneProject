@@ -56,7 +56,7 @@ Analysis.handleMention = function(unprocessedMention){...};
 	"post": "example words after meeting mention",
 }
 ```
-	
+
 ####UI
 Displays the JSON object from the Voice Analysis in a Panel with heading object using Bootstrap (http://getbootstrap.com/components/#panels-heading). Once the user makes a selection, it will be added to Google Calendar using the JS API.
 - Contract
@@ -80,4 +80,10 @@ UIController.handleMention = function(processedMention){...};
 	-pass event object with attributes (only start and end times are required in the API) as a ‘resource’
 	-call events.insert()
 	-example: https://developers.google.com/google-apps/calendar/create-events
-	
+
+
+##Running the Project
+###Building the Environment
+Install node.js. For Linux, the default package manager will have it. For os x, I use [homebrew](http://brew.sh/). For Windows, idk, I think there might be a .exe file you can download.
+From the project root, run `npm install` to install the node modules defined in package.json
+To run the unit tests, run `npm test`. Mocha is the testing framework

@@ -1,0 +1,16 @@
+{
+	"dependencies": {
+    "watson-developer-cloud": ""
+	},
+	"devDependencies": {
+    "mocha": "",
+    "browserify": "",
+    "uglify-js": "",
+    "watchify": ""
+	},
+	"scripts": {
+    "start": "watchify -o js/bundle.js -v -d ./js/app.js",
+    "build": "uglifyjs -cm > js/bundle.min.js",
+		"test": "mocha js/test"
+  }
+}
