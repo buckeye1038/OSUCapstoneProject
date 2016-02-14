@@ -87,3 +87,5 @@ UIController.handleMention = function(processedMention){...};
 Install node.js. For Linux, the default package manager will have it. For os x, I use [homebrew](http://brew.sh/). For Windows, idk, I think there might be a .exe file you can download.
 From the project root, run `npm install` to install the node modules defined in package.json
 To run the unit tests, run `npm test`. Mocha is the testing framework
+
+The website for the application is hosted [here](http://meeting-assistant.mybluemix.net/).
