@@ -1,35 +1,29 @@
-var http = require("http");
-var url = require("url");
-var path = require("path");
-var fs = require("fs");
+/*eslint-env node*/
 
-http.createServer(function handleRequest(request, response) {
-  var uri = url.parse(request.url).pathname;
-  var filename = path.join(process.cwd(), uri);
+//------------------------------------------------------------------------------
+// node.js starter application for Bluemix
+//------------------------------------------------------------------------------
 
-  fs.exists(filename, function(exists) {
-    if(!exists) {
-      response.writeHead(404, {"Content-Type": "text/plain"});
-      response.write("404 Not Found\n");
-      response.end();
-      return;
-    }
+// This application uses express as its web server
+// for more info, see: http://expressjs.com
+var express = require('express');
 
-    if (fs.statSync(filename).isDirectory()) filename += '/index.html';
+// cfenv provides access to your Cloud Foundry environment
+// for more info, see: https://www.npmjs.com/package/cfenv
+var cfenv = require('cfenv');
 
-    fs.readFile(filename, "binary", function(err, file) {
-      if(err) {
-        response.writeHead(500, {"Content-Type": "text/plain"});
-        response.write(err + "\n");
-        response.end();
-        return;
-      }
+// create a new express server
+var app = express();
 
-      response.writeHead(200);
-      response.write(file, "binary");
-      response.end();
-    });
-  });
-}).listen(8124, function(){
-  console.log("Server listening on: http://localhost:8124");
+// serve the files out of ./public as our main files
+app.use(express.static(__dirname + '/public'));
+
+// get the app environment from Cloud Foundry
+var appEnv = cfenv.getAppEnv();
+
+// start server on the specified port and binding host
+app.listen(appEnv.port, '0.0.0.0', function() {
+
+	// print a message when the server starts listening
+  console.log("server starting on " + appEnv.url);
 });

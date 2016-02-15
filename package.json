@@ -1,6 +1,14 @@
 {
+	"name": "Meeting_Assistant",
+	"version": "0.0.1",
+	"description": "A meeting assistant",
+	"engines": {
+		"node": "0.12.x"
+	},
 	"dependencies": {
-    "watson-developer-cloud": ""
+    "watson-developer-cloud": "",
+		"express": "4.12.x",
+		"cfenv": "1.0.x"
 	},
 	"devDependencies": {
     "mocha": "",
@@ -9,8 +17,7 @@
     "watchify": ""
 	},
 	"scripts": {
-    "start": "watchify -o js/bundle.js -v -d ./js/app.js",
-    "build": "uglifyjs -cm > js/bundle.min.js",
+		"start": "node server.js",
 		"test": "mocha js/test"
   }
 }
