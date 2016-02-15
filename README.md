@@ -90,4 +90,6 @@ From the project root, run `npm install` to install the node modules defined in 
 
 To run the unit tests, run `npm test`. Mocha is the testing framework
 
+To run the website locally, run `npm start` to start a node server. Then go to localhost:3001/index.html (idk if the port will always be 3001, but after `npm start`, it will tell you the port the node server is running on).
+
 The website for the application is hosted [here](http://meeting-assistant.mybluemix.net/).
