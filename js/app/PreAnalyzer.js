@@ -61,6 +61,8 @@ PreAnalyzer.prototype.transcriptEnded = function() {
   }, this);
 }
 
+// Private functions. Do not call these from outside this file
+
 PreAnalyzer.prototype.updateCurrentMeetingMentions = function(transcript) {
   for (var i = 0; i < this.currentMeetingMentions.length; i++) {
     var mention = this.currentMeetingMentions[i];
