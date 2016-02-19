@@ -1,18 +1,25 @@
 var PreAnalyzer = require('../app/PreAnalyzer.js');
+var sampleSpeechToTextOutput = require('./SampleSpeechToTextOutput.js');
 var assert = require('assert');
 
 describe('PreAnalyzer', function() {
-  describe('#add()', function() {
-    it('should add 1 to PreAnalyzer.num', function() {
-      var preAnalyzer = new PreAnalyzer(1);
-      preAnalyzer.add(1);
-      assert.equal(2, preAnalyzer.num);
-    })
-  });
-  describe('#add()', function() {
-    it('should return 1 when 1 is subtracted from 2', function() {
-      var result = PreAnalyzer.subtract(2, 1);
-      assert.equal(1, result);
-    })
+  describe('#processJson', function() {
+    it('should find a meeting mention', function(done) {
+      var meetingFoundCallback = function(meeting) {
+        var expectedMeeting = {
+          beforeMentionTranscript: ['let\'s', 'have', 'a'],
+          mentionTranscript: ['meeting'],
+          afterMentionTranscript: ['Tuesday', 'at', 'four', 'thirty']
+        };
+        assert.equal(JSON.stringify(expectedMeeting), JSON.stringify(meeting));
+        done();
+      };
+      var preAnalyzer = new PreAnalyzer(meetingFoundCallback);
+
+      for (var i = 0; i < sampleSpeechToTextOutput.length; i++) {
+        preAnalyzer.processJson(sampleSpeechToTextOutput[i], meetingFoundCallback);
+      }
+      preAnalyzer.transcriptEnded(meetingFoundCallback);
+    });
   });
 });
