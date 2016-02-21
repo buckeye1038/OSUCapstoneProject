@@ -39,22 +39,31 @@ var Tokenizer = {...};
 Tokenizer.handleResults = function(results){...}; // results is array of strings
 ```
 
-####Analysis
+####Analyzer
 Attempts to parse a date, subject, and description from the input text, puts that info in an object, and passes it to the UI controller.
 - Contract
 ```javascript
-// namespace
-var Analysis = {...};
+// Namespace
+var Analyzer = {...};
 
-// interface
-Analysis.handleMention = function(unprocessedMention){...};
-
-// UnprocessesMention object
-{
-	"pre": "example words before meeting mention",
-	"mention": "example words of meeting mention",
-	"post": "example words after meeting mention",
-}
+// Interface
+    // Constructor. The provided callback is a UI controller function.
+    Analyzer(callback)
+        // callback - function with one parameter in the following format
+	    {
+		    "date": <Date object>,
+		    "subject": "example subject",
+		    "description": "example description"
+	    }
+    // Callback to pass to PreAnalyzer constructor.
+    // Passes results to callback provided by UI controller.
+    Analyzer.processJson = function(json){...};
+        // json format
+	    {
+		    beforeMentionTranscript: [array of strings],
+		    mentionTranscript: [array of strings],
+		    afterMentionTranscript: [array of strings]
+	    }
 ```
 
 ####UI
