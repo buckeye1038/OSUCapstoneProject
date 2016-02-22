@@ -23,16 +23,11 @@ var Analyzer = function(callback) {
 		}
 */
 Analyzer.prototype.processJson = function(json) {
-	this.analyze(json);
-};
-
-// private functions
-Analyzer.prototype.analyze = function(json) {
 	this.callback({
 		date: new Date(),
 		subject: "example subject",
 		description: "example description"
 	});
-}
+};
 
 module.exports = Analyzer;
