@@ -23,8 +23,8 @@ var Analyzer = function(callback) {
 		}
 */
 Analyzer.prototype.processJson = function(json) {
-	this.callback({
-		date: new Date(),
+	this.callback({			
+		date: new Date(2016, 1, 24),
 		subject: "example subject",
 		description: "example description"
 	});

@@ -19,9 +19,9 @@ describe('Analyzer', function() {
 			var analyzer = new Analyzer(callback);
 			analyzer.processJson(
 				{
-					date: new Date(2016, 1, 24),
-					subject: "example subject",
-					description: "example description"
+					beforeMentionTranscript: ["example before mention"],
+					mentionTranscript: ["example mention"],
+					afterMentionTranscript: ["example after mention"]
 				}
 			);
 		});
