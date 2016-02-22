@@ -16,32 +16,36 @@
 
 </head>
 
-<body style="height:200%">
+<body ng-controller="MeetingAssistantController as meetings" style="height:auto">
     <style>
         .panel {
-            height:120px;
+            height: 120px;
             transition: height .5s;
             overflow: hidden;
         }
         
-        .panel:hover{
-            height:170px
+        .panel:hover {
+            height: 170px
         }
         
-        .panel a{
-            margin-top:10px;
+        .panel a {
+            margin-top: 10px;
+        }
+        
+        .btn{
+            transition: background-color .5s, border-color .5s;
         }
     </style>
     <div style="padding-top:10vh" class="row">
         <div class="col-md-2 col-md-offset-5">
-            <button type="button" class="btn btn-primary btn-lg btn-success btn-block">Start listening...</button>
+            <button id="btnListen" onclick="btnListen_Click()" type="button" class="btn btn-primary btn-lg btn-success btn-block">Start listening</button>
         </div>
     </div>
-    <div class="text-center" style="padding:10vh 25vw" class="row" ng-controller="MeetingAssistantController as meetings">
-        <h1>Meetings detected</h1>
+    <div class="text-center" style="padding:5vh 25vw" class="row">
+        <h1 style="padding-bottom:5vh"> {{meetings.meetingsList.length}} meetings detected</h1>
         <p ng-hide="true">Angular is not working!</p>
         <div ng-repeat="meeting in meetings.meetingsList | orderBy:'date'">
-            <div class="panel panel-default">
+            <div class="panel panel-info">
                 <div class="panel-heading">
                     <h3 class="panel-title">{{meeting.subject | uppercase}}</h3>
                 </div>
