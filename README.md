@@ -32,11 +32,24 @@ This takes the voice input from the user's microphone and translates it into dat
 Sees when a meeting might have been mentioned. Takes the previous n words leading up to the mention of a meeting and the next m words after the mention of a meeting.
 - Contract
 ```javascript
-// namespace
+// Namespace
 var Tokenizer = {...};
 
-// interface
-Tokenizer.handleResults = function(results){...}; // results is array of strings
+// Interface
+	// Constructor. The provided callback is a SpeechToText function.
+	PreAnalyzer(callback)
+		// callback - function with one parameter in the following format
+	    {
+		    beforeMentionTranscript: [array of strings],
+		    mentionTranscript: [array of strings],
+		    afterMentionTranscript: [array of strings]
+	    }
+		
+	// Call this function for each JSON message with results that the speech to text api returns.
+	PreAnalyzer.procesJson = function(json){...};
+		
+	// Call this function after the last speech to text result has come back from IBM.
+	PreAnalyzer.transcriptEnded = function(){...};
 ```
 
 ####Analyzer
@@ -47,7 +60,7 @@ Attempts to parse a date, subject, and description from the input text, puts tha
 var Analyzer = {...};
 
 // Interface
-    // Constructor. The provided callback is Reporting function.
+    // Constructor. The provided callback is a Reporting function.
     Analyzer(callback)
         // callback - function with one parameter in the following format
 	    {
@@ -55,7 +68,8 @@ var Analyzer = {...};
 		    "subject": "example subject",
 		    "description": "example description"
 	    }
-    // Callback to pass to PreAnalyzer constructor.
+    
+	// Callback to pass to PreAnalyzer constructor.
     // Passes results to callback provided by Reporting.
     Analyzer.processJson = function(json){...};
         // json format
@@ -66,22 +80,25 @@ var Analyzer = {...};
 	    }
 ```
 
-####UI
+####Reporting
 Displays the JSON object from the Voice Analysis in a Panel with heading object using Bootstrap (http://getbootstrap.com/components/#panels-heading). Once the user makes a selection, it will be added to Google Calendar using the JS API.
 - Contract
 ```javascript
-// namespace
-var UIController = {...};
+// Namespace
+var Reporting = {...};
 
-// interface
-UIController.handleMention = function(processedMention){...};
-
-// ProcessedMention object
-{
-	"date": <Date object>,
-	"subject": "example subject",
-	"description": "example description"
-}
+// Interface
+	// Constructor.
+	Reporting()
+	
+	// Callback to pass to Analyzer constructor.
+	Reporting.processJson = function(json){...};
+		// json format
+		{
+			"date": <Date object>,
+			"subject": "example subject",
+			"description": "example description"
+		}
 ```
 
 - Output
