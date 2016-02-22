@@ -21,10 +21,9 @@ The project is broken down into 4 sections, voice recognition, tokenizing, analy
 ###Formal Contracts
 ####Voice Recognition
 This takes the voice input from the user's microphone and translates it into data that can be manipulated. Will be operating continuously, and will be passing data to the tokenizer whenever the user takes a small break, i.e. a pause.
-- Requirements
-  - Only works in Google Chrome browser
+
 - Input
-  - JavaScript array of string results (from Google Web Speech API)
+  - Speech from Microphone
 - Output
   - JavaScript array of strings
 
