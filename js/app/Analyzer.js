@@ -1,7 +1,6 @@
 /**
  This class takes in input from the PreAnalyer, and outputs the processed data to Reporting, via the provided callback.
  Parameters
-	callback - function with one parameter in the following format
 		{
 			"date": <Date object>,
 			"time": "time string",
