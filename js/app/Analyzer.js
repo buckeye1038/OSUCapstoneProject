@@ -47,7 +47,8 @@ Analyzer.prototype.handleMention = function(json) {
 
 	var confirmedMeetingMonth;
 	var confirmedMeetingDay;
-	var confirmedMeetingTime = "";
+	var confirmedMeetingHour;
+	var confirmedMeetingMinute;
 
 	if(mentionTranscript.indexOf("meeting") != -1){
 	//**************************************search for month**************************************
@@ -147,13 +148,14 @@ Analyzer.prototype.handleMention = function(json) {
 			var timePosition = beforeMentionTranscript.indexOf(times_Hours[i]);
 
 			if(timePosition != -1){
-				confirmedMeetingTime += (i+1)+ ":";
+				confirmedMeetingHour = i + 1;
 
 				for(var j = 0; j < 5; j++){
 					if(beforeMentionTranscript[timePosition + 1] === times_Minutes_Partial[j]){
-						confirmedMeetingTime += ((j+1)*10);
+						confirmedMeetingMinute = (j + 1) * 10;
 						containsTime = true;
 					}
+					break;
 				}
 			}
 		}
@@ -163,21 +165,32 @@ Analyzer.prototype.handleMention = function(json) {
 			var timePosition = afterMentionTranscript.indexOf(times_Hours[i]);
 
 			if(timePosition != -1){
-				confirmedMeetingTime += (i+1)+ ":";
+				confirmedMeetingHour = i + 1;
 
 				for(var j = 0; j < 5; j++){
 					if(afterMentionTranscript[timePosition + 1] === times_Minutes_Partial[j]){
-						confirmedMeetingTime += ((j+1)*10);
+						confirmedMeetingMinute = (j + 1) * 10;
 						containsTime = true;
 					}
 				}
+				break;
 			}
 		}
 	}
 
+	console.log(confirmedMeetingMonth);
+	console.log(confirmedMeetingDay);
+	console.log(confirmedMeetingHour);
+	console.log(confirmedMeetingMinute);
+
+	console.log(JSON.stringify({
+		date: new Date(2016, confirmedMeetingMonth, confirmedMeetingDay, confirmedMeetingHour, confirmedMeetingMinute),
+		subject: "Meeting",
+		description: "Sample description"
+	}));
+
 	return {
-		date: new Date(2016, confirmedMeetingMonth, confirmedMeetingDay),
-		time: confirmedMeetingTime,
+		date: new Date(2016, confirmedMeetingMonth-1, confirmedMeetingDay, confirmedMeetingHour + 12, confirmedMeetingMinute),
 		subject: "Meeting",
 		description: "Sample description"
 	};

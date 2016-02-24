@@ -35,14 +35,14 @@ PreAnalyzer.prototype.processJson = function(json) {
   json = json['results'][0];
   if (json['final'] === true) {
     var transcript = json['alternatives'][0]['transcript'];
-    var tokenizedTranscript = this.transcript.concat(tokenizeTranscript(transcript));
-    this.transcript = tokenizedTranscript;
+    var tokenizedTranscript = tokenizeTranscript(transcript);
 
     if (transcript.includes('meeting')) {
-      var meetingIndex = tokenizedTranscript.indexOf('meeting') + this.transcript.length - tokenizedTranscript.length;
+      var meetingIndex = tokenizedTranscript.indexOf('meeting') + this.transcript.length;// - tokenizedTranscript.length;
       var mention = new MeetingMention(meetingIndex);
       this.currentMeetingMentions.push(mention);
     }
+    this.transcript = this.transcript.concat(tokenizedTranscript);
 
     this.updateCurrentMeetingMentions(transcript);
   }
@@ -66,7 +66,6 @@ PreAnalyzer.prototype.transcriptEnded = function() {
 PreAnalyzer.prototype.updateCurrentMeetingMentions = function(transcript) {
   for (var i = 0; i < this.currentMeetingMentions.length; i++) {
     var mention = this.currentMeetingMentions[i];
-
     // if the mention just happened, add the before mention and mention transcript also
     if (mention.mentionTranscript.length === 0) {
       var beforeMentionTranscriptStartIndex = Math.max(0, mention.mentionTranscriptStartIndex - MEETING_MENTION_LENGTH);
@@ -98,7 +97,7 @@ function tokenizeTranscript(str) {
   var tokens = []
   var index = str.indexOf(' ');
 
-  while (index > 0) {
+  while (index >= 0) {
     var token = str.substring(0, index);
     tokens.push(token.trim());
 

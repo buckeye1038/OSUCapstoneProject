@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html ng-app="meetingassistant">
+
+<head>
+    <title>Meeting Assistant</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script type="text/javascript" src="./bundle.js"></script>
+</head>
+
+<body ng-controller="MeetingAssistantController as meetings" style="height:auto">
+    <style>
+        .panel {
+            height: 120px;
+            transition: height .5s;
+            overflow: hidden;
+        }
+
+        .panel:hover {
+            height: 170px
+        }
+
+        .panel a {
+            margin-top: 10px;
+        }
+
+        .btn{
+            transition: background-color .5s, border-color .5s;
+        }
+    </style>
+    <div style="padding-top:10vh" class="row">
+        <div class="col-md-2 col-md-offset-5">
+            <button id="btnListen" ng-click="btnListen_Click()" type="button" class="btn btn-primary btn-lg btn-success btn-block">Start listening</button>
+        </div>
+        <div class="text-center">
+          <textarea id="text" style="margin-top: 5vh;" rows="10" cols="100">
+Let's have a meeting on february twenty fifth at four thirty . We'll talk about ...
+at nullam quis dignissim phasellus vitae ante augue magna duis pede adipiscing consequat amet pulvinar velit tortor est taciti sed a nisl vestibulum augue a amet purus justo suscipit praesent potenti morbi donec cursus dolor ac diam odio consectetuer et faucibus justo a nibh at erat vitae sem inceptos sollicitudin eu ac minus vitae lectus hymenaeos lacus ut egestas erat metus sem pretium in arcu etiam leo nunc pellentesque leo a tincidunt dignissim quis at non suspendisse elit mattis nulla eget orci cras aliquet nunc velit nullam fusce risus elit nulla magna ornare risus sodales massa ac commodo pellentesque ac ...
+We should have another meeting on march third to talk about this. Let's do two ten
+          </textarea>
+        </div>
+    </div>
+    <div class="text-center" style="padding:5vh 25vw" class="row">
+        <h1 style="padding-bottom:5vh"> {{meetings.meetingsList.length}} meetings detected</h1>
+        <p ng-hide="true">Angular is not working!</p>
+        <div ng-repeat="meeting in meetings.meetingsList | orderBy:'date'">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{meeting.subject | uppercase}}</h3>
+                </div>
+                <div class="panel-body" ng-init="meeting.enddate.setTime(meeting.date.getTime())">
+                    <p ng-init="meeting.enddate.setHours(meeting.enddate.getHours()+1)">{{meeting.date | date:'h:mma on MM/dd/yyyy'}}</p>
+                    <p>{{meeting.description}}</p>
+                    <!--<p>{{meeting.date | date:'yyyyMMddTHHmmss':'UTC'}}</p>
+                    <p>{{meeting.enddate | date:'yyyyMMddTHHmmss':'UTC'}}</p>                                   -->
+                    <a href="https://www.google.com/calendar/render?action=TEMPLATE&text={{meeting.subject}}&dates={{meeting.date | date:'yyyyMMddTHHmmss':'UTC'}}Z/{{meeting.enddate | date:'yyyyMMddTHHmmss':'UTC'}}Z&details={{meeting.description}}&sf=true&output=xml" target="_blank"
+                    class="btn btn-primary" rel="nofollow">Add to my calendar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
