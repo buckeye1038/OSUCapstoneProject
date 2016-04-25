@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Meeting Assistant</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.js"></script>
+  	<script src="./bundle.js"></script>
+</head>
+
+<body ng-app="meetingassistant" ng-controller="MeetingAssistantController as meetings" style="height:auto">
+    <style>
+        .panel {
+            height: 200px;
+        }
+
+        .panel a {
+            margin-top: 10px;
+        }
+
+        #btnListen {
+            transition: background-color .5s, border-color .5s;
+        }
+
+        @keyframes pulsate {
+            0% {
+                height: 46px;
+                width: 144px;
+                margin: 7px 0;
+            }
+            50% {
+                height: 50px;
+                margin: 5px 0;
+                width: 160px;
+            }
+            100% {
+                height: 46px;
+                width: 144px;
+                margin: 7px 0;
+            }
+        }
+
+        .btn-warning {
+            animation-duration: 2s;
+            animation-name: pulsate;
+            animation-iteration-count: infinite;
+        }
+    </style>
+    <div style="padding-top:10vh;height:20vh" class="row">
+        <div class="col-md-4 col-md-offset-4" style="text-align:center;height:60px;">
+            <button style="margin:7px 0" id="btnListen" type="button" class="btn btn-primary btn-lg btn-success">Start listening</button>
+        </div>
+    </div>
+    <div class="text-center" style="padding:0 25vw 10vh 25vw" class="row">
+        <h1 style="padding-bottom:5vh" ng-click="refresh()"> {{meetings.meetingsList.length}} meetings detected</h1>
+        <p ng-hide="true">Angular is not working!</p>
+        <div ng-repeat="meeting in meetings.meetingsList | orderBy:'date'">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{meeting.subject | uppercase}}</h3>
+                </div>
+                <div class="panel-body">
+                    <p>{{meeting.date | date:'h:mma on MM/dd/yyyy'}}</p>
+                    <p>{{meeting.description}}</p>
+                    <!--<p>{{meeting.date | date:'yyyyMMddTHHmmss':'UTC'}}</p>
+                    <p>{{meeting.enddate | date:'yyyyMMddTHHmmss':'UTC'}}</p>                                   -->
+                    <a href="https://www.google.com/calendar/render?action=TEMPLATE&text={{meeting.subject}}&dates={{meeting.date | date:'yyyyMMddTHHmmss':'UTC'}}Z/{{meeting.enddate | date:'yyyyMMddTHHmmss':'UTC'}}Z&details={{meeting.description}}&sf=true&output=xml" target="_blank"
+                    class="btn btn-primary" rel="nofollow">Add to my calendar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

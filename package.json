@@ -1,0 +1,30 @@
+{
+	"name": "Meeting_Assistant",
+	"version": "0.0.1",
+	"description": "A meeting assistant",
+	"engines": {
+		"node": "*"
+	},
+	"dependencies": {
+		"vcap_services" : "",
+		"watson-developer-cloud": "^1.1.2",
+		"jquery": "",
+		"pubsub-js": "",
+		"express": "4.12.x",
+		"cfenv": "1.0.x",
+		"extend": "",
+		"object.omit": "",
+		"request": ""
+	},
+	"devDependencies": {
+		"mocha": "",
+		"browserify": "",
+		"uglify-js": "",
+		"watchify": ""
+	},
+	"scripts": {
+		"start": "node server.js",
+		"build": "watchify -o public/bundle.js -v -d public/app.js",
+		"test": "mocha js/test"
+  }
+}
